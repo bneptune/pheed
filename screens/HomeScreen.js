@@ -59,92 +59,12 @@ const cardWidth = cardHeight - 50;
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: "Pheed"
+    title: "PheedMe"
   };
 
   state = {
-    markers: [
-      {
-        coordinate: {
-          latitude: 38.9086624,
-          longitude: -76.9990501
-        },
-        title: "Heart Wall",
-        description:
-          "Icing cheesecake cheesecake bear claw tiramisu apple pie candy macaroon macaroon. Jelly-o dragée bear claw chupa chups sweet roll candy canes sesame snaps cake. Soufflé candy canes liquorice gummi bears. Tootsie roll halvah donut halvah dessert tart.",
-        image: Images[0]
-      },
-      {
-        coordinate: {
-          latitude: 38.910948,
-          longitude: -77.027537
-        },
-        title: "Watermelon Wall",
-        description:
-          "Bear claw muffin marshmallow liquorice macaroon. Tootsie roll icing lemon drops. Pastry chocolate cake tiramisu candy marzipan donut sesame snaps. Danish tiramisu biscuit candy dragée toffee lollipop jujubes.",
-        image: Images[1]
-      },
-      {
-        coordinate: {
-          latitude: 40.7210019,
-          longitude: -73.9968509
-        },
-        title: "Pietro Nolita",
-        description:
-          "Chupa chups sweet roll soufflé candy canes marzipan liquorice liquorice. Pie sesame snaps cotton candy tiramisu bonbon carrot cake. Gummies cake caramels sesame snaps fruitcake chocolate bar caramels donut chupa chups.",
-        image: Images[2]
-      },
-      {
-        coordinate: {
-          latitude: 38.9084356,
-          longitude: -76.9996593
-        },
-        title: "Union Market",
-        description:
-          "Icing candy tart chocolate bar macaroon sesame snaps jujubes soufflé. Liquorice sweet roll fruitcake ice cream. Brownie lollipop sugar plum wafer tart wafer. Toffee tiramisu donut cupcake powder dragée apple pie.",
-        image: Images[3]
-      },
-      {
-        coordinate: {
-          latitude: 40.7543661,
-          longitude: -73.9944267
-        },
-        title: "305 Fitness",
-        description:
-          "Macaroon cheesecake jujubes lemon drops jelly lemon drops caramels marzipan pastry. Toffee pie tiramisu. Topping caramels jelly. Cotton candy soufflé cupcake.",
-        image: Images[4]
-      },
-      {
-        coordinate: {
-          latitude: 40.774637,
-          longitude: -73.6039843
-        },
-        title: "Old Westbury Gardens",
-        description:
-          "Icing cheesecake cheesecake bear claw tiramisu apple pie candy macaroon macaroon. Jelly-o dragée bear claw chupa chups sweet roll candy canes sesame snaps cake. Soufflé candy canes liquorice gummi bears. Tootsie roll halvah donut halvah dessert tart.",
-        image: Images[5]
-      },
-      {
-        coordinate: {
-          latitude: 40.774637,
-          longitude: -73.6039843
-        },
-        title: "Bushwick Collective",
-        description:
-          "Bear claw muffin marshmallow liquorice macaroon. Tootsie roll icing lemon drops. Pastry chocolate cake tiramisu candy marzipan donut sesame snaps. Danish tiramisu biscuit candy dragée toffee lollipop jujubes.",
-        image: Images[6]
-      },
-      {
-        coordinate: {
-          latitude: 40.7045544,
-          longitude: -73.9945468
-        },
-        title: "Jane's Carousel",
-        description:
-          "Chupa chups sweet roll soufflé candy canes marzipan liquorice liquorice. Pie sesame snaps cotton candy tiramisu bonbon carrot cake. Gummies cake caramels sesame snaps fruitcake chocolate bar caramels donut chupa chups.",
-        image: Images[7]
-      }
-    ],
+    loaded: false,
+    markers: [],
     region: {
       latitude: 38.910948,
       longitude: -77.027537,
@@ -194,10 +114,15 @@ class HomeScreen extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      this.setState({ markers: this.props.locations, loaded: true });
+    }
+    console.log("update", this.props.location);
+  }
+
   render() {
     const { navigate } = this.props.navigation;
-    console.log(this.props.navigation.navigate);
-    console.log("Hey", this.props.state);
 
     const interpolations = this.state.markers.map((marker, index) => {
       const inputRange = [
@@ -218,7 +143,7 @@ class HomeScreen extends React.Component {
       return { scale, opacity };
     });
 
-    return this.state.markers.length === 0 ? (
+    return this.state.loaded === false ? (
       <View>
         <Text>Loading...</Text>
       </View>

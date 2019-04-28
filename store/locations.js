@@ -19,6 +19,7 @@ export const getAllLocations = () => {
       .then(parsedRes => {
         const locations = parsedRes;
         dispatch(gotAllLocations(locations));
+        console.log("dispatch!", locations);
       });
   };
 };
