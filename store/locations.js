@@ -29,9 +29,9 @@ export const gotSingleLocation = location => ({
   location
 });
 
-export const getSingleLocation = () => {
+export const getSingleLocation = index => {
   return dispatch => {
-    fetch("https://pheed-test.firebaseio.com/locations/4.json")
+    fetch(`https://pheed-test.firebaseio.com/locations/${index}.json`)
       .catch(err => console.log(err))
       .then(res => res.json())
       .then(parsedRes => {
@@ -79,9 +79,12 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_LOCATIONS:
+      // console.log("in reducer", action.locations);
       return { ...state, locations: action.locations };
     case GET_SINGLE_LOCATION:
+      // console.log("in reducer", action.location);
       return { ...state, singleLocation: action.location };
+
     default:
       return state;
   }

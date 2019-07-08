@@ -7,12 +7,13 @@ import {
 
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
+import SingleLocation from "../screens/SingleLocation";
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  Details: LinksScreen,
+  Single: SingleLocation,
   initialRouteName: "Home"
 });
 

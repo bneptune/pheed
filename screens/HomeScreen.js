@@ -1,8 +1,5 @@
 import React from "react";
 import { MapView } from "expo";
-// import { Callout } from "react-native-maps";
-// import { createStackNavigator } from "react-navigation";
-// import { SingleStack } from "../screens/SingleLocation";
 import { connect } from "react-redux";
 import { getAllLocations } from "../store/locations";
 import { withNavigation } from "react-navigation";
@@ -10,47 +7,12 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   Animated,
   Image,
   Dimensions,
   TouchableOpacity,
   Button
 } from "react-native";
-
-const Images = [
-  {
-    uri:
-      "http://lisamariestudio.com/wp/wp-content/uploads/2018/07/LisaMarie_LOVE_reflections_extended_lo_cropped.jpg"
-  },
-  {
-    uri:
-      "https://i.pinimg.com/originals/09/41/26/09412692c3564c28a7604211e792a732.png"
-  },
-  {
-    uri: "https://s3-media1.fl.yelpcdn.com/bphoto/B2SQTk7xM-W4nmuBbOkLSA/o.jpg"
-  },
-  {
-    uri:
-      "https://static.wixstatic.com/media/2fdcea_750bde66d7a74a88b19042cf2757a682~mv2.jpg/v1/fill/w_630,h_420,al_c,q_80,usm_0.66_1.00_0.01/2fdcea_750bde66d7a74a88b19042cf2757a682~mv2.jpg"
-  },
-  {
-    uri:
-      "http://mediad.publicbroadcasting.net/p/wlrn/files/styles/x_large/public/201612/File_000_0.jpeg"
-  },
-  {
-    uri:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Old_Westbury_Gardens_18.JPG/220px-Old_Westbury_Gardens_18.JPG"
-  },
-  {
-    uri:
-      "https://img.grouponcdn.com/pwa_test/45jakseyovcTErH37YqPgt9FpC9M/45-1440x810/v1/c700x420.jpg"
-  },
-  {
-    uri:
-      "https://blankslatepages.s3.amazonaws.com/5637ea2cbd653-Janes-Carousel-4-thumb-550x366.jpg"
-  }
-];
 
 const { width, height } = Dimensions.get("window");
 
@@ -83,9 +45,6 @@ class HomeScreen extends React.Component {
     this.animation = new Animated.Value(0);
   }
 
-  componentWillUnmount() {
-    this.focusListener.remove();
-  }
   componentDidMount() {
     this.animation.addListener(({ value }) => {
       let index = Math.floor(value / cardWidth + 0.3);
@@ -119,6 +78,10 @@ class HomeScreen extends React.Component {
       this.setState({ markers: this.props.locations, loaded: true });
     }
     console.log("update", this.props.location);
+  }
+
+  componentWillUnmount() {
+    this.focusListener.remove();
   }
 
   render() {
